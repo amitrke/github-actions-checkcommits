@@ -33,7 +33,7 @@ jobs:
           echo "COMMIT_MSG_DEV=Commit $LATEST_COMMIT_IN_PR not found in develop branch :x:" >> $GITHUB_ENV
 
       - name: If commit in develop
-        if: ${{ env.COMMIT_IN_DEVELOP }} > 0
+        if: ${{ env.COMMIT_IN_DEVELOP > 0}}
         run: |
           echo "COMMIT_MSG_DEV=Thank you for pushing your code to the develop branch first :heavy_check_mark:" >> $GITHUB_ENV
 
