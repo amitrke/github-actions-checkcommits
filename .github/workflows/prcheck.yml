@@ -27,13 +27,13 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
-          echo {{ github.event.pull_request.head.sha }}
 
       - name: Check commit
         run: |
           COMMIT_IN_DEVELOP=`git branch --contains $GITHUB_SHA|grep develop|wc -l`
           echo $COMMIT_IN_DEVELOP
           echo "$GITHUB_CONTEXT"
+          echo ${{ github.event.pull_request.head.sha }}
 
       - name: Check commit
         run: |
