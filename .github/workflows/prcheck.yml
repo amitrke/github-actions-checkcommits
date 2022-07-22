@@ -30,10 +30,9 @@ jobs:
 
       - name: Check commit
         run: |
-          COMMIT_IN_DEVELOP=`git branch --contains $GITHUB_SHA|grep develop|wc -l`
+          LATEST_COMMIT_IN_PR=${{ github.event.pull_request.head.sha }}
+          COMMIT_IN_DEVELOP=`git branch --contains $LATEST_COMMIT_IN_PR|grep develop|wc -l`
           echo $COMMIT_IN_DEVELOP
-          echo "$GITHUB_CONTEXT"
-          echo ${{ github.event.pull_request.head.sha }}
 
       - name: Check commit
         run: |
@@ -42,7 +41,7 @@ jobs:
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: "Hello world $COMMIT_IN_DEVELOP ! :wave:"
+          message: "Hello world ${{ github.event.pull_request.head.sha }} ! :wave:"
           GITHUB_TOKEN: ${{ github.token }}
 
       # Runs a set of commands using the runners shell
