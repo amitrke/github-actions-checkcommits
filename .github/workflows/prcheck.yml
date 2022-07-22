@@ -29,11 +29,11 @@ jobs:
           LATEST_COMMIT_IN_PR="${{ github.event.pull_request.head.sha }}"
           echo $LATEST_COMMIT_IN_PR
           COMMIT_IN_DEVELOP=`git branch --contains $LATEST_COMMIT_IN_PR|grep develop|wc -l`
-          echo $COMMIT_IN_DEVELOP
+          echo "{COMMIT_IN_DEVELOP}={$COMMIT_IN_DEVELOP}" >> $GITHUB_ENV
 
       - name: Check commit
         run: |
-          echo $COMMIT_IN_DEVELOP
+          echo echo ${{ env.COMMIT_IN_DEVELOP }}
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v1
