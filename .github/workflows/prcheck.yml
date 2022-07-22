@@ -22,6 +22,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - name: Check commit
         run: |
           COMMIT_IN_DEVELOP=`git branch --contains $GITHUB_SHA|grep develop|wc -l`
