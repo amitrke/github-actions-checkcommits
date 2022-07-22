@@ -24,15 +24,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
-
       - name: Check commit
         run: |
-          git checkout develop
           LATEST_COMMIT_IN_PR="${{ github.event.pull_request.head.sha }}"
           echo $LATEST_COMMIT_IN_PR
           COMMIT_IN_DEVELOP=`git branch --contains $LATEST_COMMIT_IN_PR|grep develop|wc -l`
