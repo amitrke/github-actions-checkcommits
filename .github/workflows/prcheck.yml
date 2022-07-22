@@ -30,7 +30,8 @@ jobs:
 
       - name: Check commit
         run: |
-          LATEST_COMMIT_IN_PR=${{ github.event.pull_request.head.sha }}
+          LATEST_COMMIT_IN_PR="${{ github.event.pull_request.head.sha }}"
+          echo $LATEST_COMMIT_IN_PR
           COMMIT_IN_DEVELOP=`git branch --contains $LATEST_COMMIT_IN_PR|grep develop|wc -l`
           echo $COMMIT_IN_DEVELOP
 
