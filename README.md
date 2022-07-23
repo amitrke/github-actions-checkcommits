@@ -3,4 +3,3 @@ Example of how to create github action that would check if the commits are prese
 
 Test update 1
 
-Test Update 2
