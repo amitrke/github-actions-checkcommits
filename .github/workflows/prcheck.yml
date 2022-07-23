@@ -1,4 +1,3 @@
-# This is a basic workflow to help you get started with Actions
 
 name: CI
 
@@ -33,13 +32,25 @@ jobs:
           echo "COMMIT_MSG_DEV=Commit $LATEST_COMMIT_IN_PR not found in develop branch :x:" >> $GITHUB_ENV
 
       - name: If commit in develop
-        if: ${{ env.COMMIT_IN_DEVELOP > 0}}
+        if: ${{ (env.COMMIT_IN_DEVELOP > 0) }}
         run: |
-          echo "COMMIT_MSG_DEV=Thank you for pushing your code to the develop branch first :heavy_check_mark:" >> $GITHUB_ENV
+          echo "commit in develop"
+          #echo "COMMIT_MSG_DEV=Thank you for pushing your code to the develop branch first :heavy_check_mark:" >> $GITHUB_ENV
 
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: "${{ env.COMMIT_MSG_DEV }}"
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: If commit not in develop
+        if: ${{ (env.COMMIT_IN_DEVELOP < 1) }}
+        run: |
+          echo "commit not in develop"
+          #echo "COMMIT_MSG_DEV=Thank you for pushing your code to the develop branch first :heavy_check_mark:" >> $GITHUB_ENV
+
+      # - name: If commit in develop
+      #   if: ${{ env.COMMIT_IN_DEVELOP > 0}}
+      #   run: |
+      #     echo "COMMIT_MSG_DEV=Thank you for pushing your code to the develop branch first :heavy_check_mark:" >> $GITHUB_ENV
+
+      # - name: Comment PR
+      #   uses: thollander/actions-comment-pull-request@v1
+      #   with:
+      #     message: "${{ env.COMMIT_MSG_DEV }}"
+      #     GITHUB_TOKEN: ${{ github.token }}
 
