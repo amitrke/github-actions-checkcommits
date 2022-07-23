@@ -31,25 +31,17 @@ jobs:
           echo "COMMIT_IN_DEVELOP=$COMMIT_IN_DEVELOP" >> $GITHUB_ENV
           echo "COMMIT_MSG_DEV=Commit $LATEST_COMMIT_IN_PR not found in develop branch :x:" >> $GITHUB_ENV
 
-      - name: If commit in develop
-        if: ${{ (env.COMMIT_IN_DEVELOP > 0) }}
-        run: |
-          echo "COMMIT_MSG_DEV=Thank you for pushing your code to the develop branch first :heavy_check_mark:" >> $GITHUB_ENV
-
-      # - name: If commit not in develop
-      #   if: ${{ (env.COMMIT_IN_DEVELOP < 1) }}
-      #   run: |
-      #     echo "commit not in develop"
-      #     #echo "COMMIT_MSG_DEV=Thank you for pushing your code to the develop branch first :heavy_check_mark:" >> $GITHUB_ENV
-
-      # - name: If commit in develop
-      #   if: ${{ env.COMMIT_IN_DEVELOP > 0}}
-      #   run: |
-      #     echo "COMMIT_MSG_DEV=Thank you for pushing your code to the develop branch first :heavy_check_mark:" >> $GITHUB_ENV
-
       - name: Comment PR
+        if: ${{ (env.COMMIT_IN_DEVELOP < 1) }}
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: "${{ env.COMMIT_MSG_DEV }}"
           GITHUB_TOKEN: ${{ github.token }}
+      
+      - name: Check Fail
+        if: ${{ (env.COMMIT_IN_DEVELOP < 1) }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('Commit not present in develop branch')
 
